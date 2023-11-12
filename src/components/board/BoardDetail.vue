@@ -18,15 +18,18 @@ onMounted(() => {
 const getArticle = () => {
   // const { articleno } = route.params;
   console.log(articleno + "번글 얻으러 가자!!!");
-   // API 호출
-   detailArticle(articleno, ({data}) => {
-    console.log(data);  
+  // API 호출
+  detailArticle(
+    articleno,
+    ({ data }) => {
+      console.log(data);
       article.value = data;
       console.log(article);
-   },
-  (error) => {
-    console.log(error)
-  });
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
 };
 
 function moveList() {
@@ -40,23 +43,19 @@ function moveModify() {
 function onDeleteArticle() {
   // const { articleno } = route.params;
   console.log(articleno + "번글 삭제하러 가자!!!");
-   // API 호출
-   deleteArticle(articleno, moveList());
-
+  // API 호출
+  deleteArticle(articleno, moveList());
 }
 </script>
 
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글보기</mark>
-        </h2>
-      </div>
-      <div class="col-lg-10 text-start">
+      <div class="col-lg-10 text-start mt-5">
         <div class="row my-2">
-          <h2 class="text-secondary px-5">{{ article.articleNo }}. {{ article.subject }}</h2>
+          <h2 class="text-secondary">
+            {{ article.articleNo }}. {{ article.subject }}
+          </h2>
         </div>
         <div class="row">
           <div class="col-md-8">
@@ -66,7 +65,7 @@ function onDeleteArticle() {
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
               <p>
-                <span class="fw-bold">{{article.userId}}</span> <br />
+                <span class="fw-bold">{{ article.userId }}</span> <br />
                 <span class="text-secondary fw-light">
                   {{ article.registerTime }}1 조회 : {{ article.hit }}
                 </span>
@@ -80,13 +79,25 @@ function onDeleteArticle() {
           </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
+            <button
+              type="button"
+              class="btn btn-outline-primary mb-3"
+              @click="moveList"
+            >
               글목록
             </button>
-            <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
+            <button
+              type="button"
+              class="btn btn-outline-success mb-3 ms-1"
+              @click="moveModify"
+            >
               글수정
             </button>
-            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteArticle">
+            <button
+              type="button"
+              class="btn btn-outline-danger mb-3 ms-1"
+              @click="onDeleteArticle"
+            >
               글삭제
             </button>
           </div>
