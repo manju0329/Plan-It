@@ -1,29 +1,50 @@
-# vue-kwantong
 
-This template should help get you started developing with Vue 3 in Vite.
+# Vue 관통프로젝트
 
-## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## :person_frowning: 팀원
 
-```sh
-npm install
-```
+- 이민주
+- 김하은
 
-### Compile and Hot-Reload for Development
+| 필수 기능 |  |
+| -------- | ------------------ |
+| 게시판 기능 | :white_check_mark: |
+| 게시판 화면 | :white_check_mark: |
+| 메인페이지 화면 | :white_check_mark: |
+| 회원관리 화면 | :white_check_mark: |
 
-```sh
-npm run dev
-```
+# 1. 게시판 관련 기능
+### 게시글 작성
+![게시글작성](/uploads/e9c6f9e7687a8faabbffc79f8507b996/스크린샷_2023-11-12_오후_4.32.22.png)
 
-### Compile and Minify for Production
+### 전체 게시글 조회
+![전체게시글조회](/uploads/645fa8e38247d92fd6dfb74612321a7a/스크린샷_2023-11-12_오후_4.23.35.png)
 
-```sh
-npm run build
-```
+### 게시글 검색
+![게시글검색](/uploads/1ceba2374460d1d827853904405b1955/스크린샷_2023-11-12_오후_4.25.16.png)
+
+### 게시글 세부 조회
+![게시글상세조회](/uploads/c4202f7a0c6df617c9dc75c2be4b71e2/스크린샷_2023-11-12_오후_4.27.02.png)
+
+### 게시글 수정
+![게시글수정1](/uploads/ff86335e72494ad392f580e6223fa026/스크린샷_2023-11-12_오후_4.27.36.png)
+
+![게시글수정2](/uploads/7987583d7ffb5910857907d5f39cfe74/스크린샷_2023-11-12_오후_4.28.00.png)
+
+### 게시글 삭제
+![게시글삭제1](/uploads/45e77294880d8f034f69a2eb0877ecdc/스크린샷_2023-11-12_오후_4.33.16.png)
+![게시글삭제2](/uploads/b169c8fc262b1d9567f9beeff50d967d/스크린샷_2023-11-12_오후_4.33.53.png)
+
+# 2. 메인 페이지
+![메인페이지](/uploads/5148073448f5a0f5b07b990529ac5c83/KakaoTalk_Photo_2023-11-12-16-47-47.jpeg)
+
+# 3. 회원 관련 기능
+### 로그인
+![로그인](/uploads/04b9e03d27438b29e669622ff7833a18/스크린샷_2023-11-12_오후_4.43.02.png)
+
+### 회원가입
+![회원가입](/uploads/4e829c081178fa902836157bb960c060/스크린샷_2023-11-12_오후_4.43.22.png)
