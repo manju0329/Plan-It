@@ -76,6 +76,24 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/admin",
+      name: "admin",
+      component: () => import("../views/AdminView.vue"),
+      redirect: { name: "member-list" },
+      children: [
+        {
+          path: "list",
+          name: "member-list",
+          component: () => import("@/components/admin/AdminList.vue"),
+        },
+        {
+          path: "view/:userId",
+          name: "member-view",
+          component: () => import("@/components/admin/AdminDetail.vue"),
+        },
+      ],
+    },
   ],
 });
 

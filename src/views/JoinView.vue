@@ -1,11 +1,26 @@
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { registMember } from "@/api/member";
 
 const router = useRouter();
 const moveLogin = () => {
   router.push("/login");
 };
-const register = () => {};
+
+const userInfo = ref({
+  userName: "",
+  userId: "",
+  userPw: "",
+  userEmail: "",
+  joinDate: "",
+  userRole: "member",
+});
+
+function onSubmit() {
+  registMember(userInfo);
+  router.push("/");
+}
 </script>
 
 <template>
@@ -17,8 +32,7 @@ const register = () => {};
         <div class="masthead-subheading mt-3" style="text-align: center">
           JOIN
         </div>
-        <form id="form-login" method="POST" action="">
-          <input type="hidden" name="action" value="join" />
+        <form id="form-login" @submit.prevent="onSubmit">
           <div class="form-floating m-3">
             <input
               type="text"
@@ -26,6 +40,7 @@ const register = () => {};
               id="id"
               placeholder="Enter email"
               name="id"
+              v-model="userInfo.userId"
             />
             <label for="id">ID</label>
           </div>
@@ -36,6 +51,7 @@ const register = () => {};
               id="password"
               placeholder="Enter password"
               name="password"
+              v-model="userInfo.userPw"
             />
             <label for="pwd">Password</label>
           </div>
@@ -46,6 +62,7 @@ const register = () => {};
               id="name"
               placeholder="Enter name"
               name="name"
+              v-model="userInfo.userName"
             />
             <label for="name">Name</label>
           </div>
@@ -56,6 +73,7 @@ const register = () => {};
               id="email"
               placeholder="Enter email"
               name="email"
+              v-model="userInfo.userEmail"
             />
             <label for="email">Email</label>
           </div>
@@ -70,10 +88,9 @@ const register = () => {};
               취소
             </button>
             <button
-              type="button"
+              type="submit"
               class="btn btn-outline-secondary m-3"
               id="btn-go-to-index"
-              @click="register()"
             >
               가입하기
             </button>
