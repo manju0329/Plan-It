@@ -1,12 +1,24 @@
-<script setup></script>
+<script setup>
+import { RouterLink, RouterView } from "vue-router";
+import { computed } from "vue";
+import { userStore } from "@/stores/userPiniaStore";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const ustore = userStore();
+const isLogin = computed(() => ustore.isLogin);
+
+async function logout() {
+  console.log("hi");
+  console.log("로그아웃 -> " + ustore.userInfo.userId);
+  await ustore.userLogout(ustore.userInfo.userId);
+  router.push("/"); // 메인 페이지로 이동
+}
+</script>
 
 <template>
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Agency - Start Bootstrap Theme</title>
@@ -58,12 +70,11 @@
               <a class="nav-link" href="/hotplace">Hotplace</a>
             </li>
             <li class="nav-item">
-              <router-link :to="{ name: 'board' }" class="nav-link"
-                >Board</router-link
-              >
+              <router-link :to="{ name: 'board' }" class="nav-link">Board</router-link>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a v-if="!isLogin" class="nav-link" href="/login">Login</a>
+              <a v-if="isLogin" class="nav-link" href="#" v-on:click="logout()">Logout</a>
             </li>
           </ul>
         </div>
