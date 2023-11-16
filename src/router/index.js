@@ -58,11 +58,20 @@ const router = createRouter({
       component: MainView,
     },
     {
-      beforeEnter: onlyAuthUser,
       path: "/attraction",
       name: "attraction",
-      component: AttractionView,
+      component: () => import("../views/AttractionView.vue"),
+      redirect: { name: "attraction-list" },
+      children: [
+        {
+          beforeEnter: onlyAuthUser,
+          path: "list",
+          name: "attraction-list",
+          component: () => import("@/components/attraction/attraction.vue"),
+        },
+      ],
     },
+
     {
       beforeEnter: onlyAuthUser,
       path: "/plan",
