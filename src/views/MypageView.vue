@@ -1,24 +1,27 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { registMember } from "@/api/member";
+import { userStore } from "@/stores/userPiniaStore";
+import { deleteMember } from "@/api/member";
 
 const router = useRouter();
-const moveLogin = () => {
-  router.push("/login");
-};
+const ustore = userStore();
 
-const userInfo = ref({
-  userName: "",
-  userId: "",
-  userPw: "",
-  userEmail: "",
-  joinDate: "",
-  userRole: "member",
+const userInfo = reactive({
+  userId: ustore.userInfo.userId,
+  userName: ustore.userInfo.userName,
+  userPw: ustore.userInfo.userPw,
+  userEmail: ustore.userInfo.userEmail,
 });
 
-function onSubmit() {
-  registMember(userInfo);
+async function modify() {
+  await ustore.modifyUserInfo(userInfo);
+  router.push({ name: "mypage" });
+}
+
+async function onDelete() {
+  deleteMember(ustore.userInfo.userId);
+  await ustore.userLogout(ustore.userInfo.userId);
   router.push("/");
 }
 </script>
@@ -26,12 +29,8 @@ function onSubmit() {
 <template>
   <div class="container-fluid pt-5" style="height: 75vh">
     <section class="container" style="height: 300px">
-      <div
-        class="container w-50 mt-5 p-3 border border-1 border-secondary rounded-4"
-      >
-        <div class="masthead-subheading mt-3" style="text-align: center">
-          MYPAGE
-        </div>
+      <div class="container w-50 mt-5 p-3 border border-1 border-secondary rounded-4">
+        <div class="masthead-subheading mt-3" style="text-align: center">MYPAGE</div>
         <form id="form-login" @submit.prevent="onSubmit">
           <div class="form-floating m-3">
             <input
@@ -41,6 +40,8 @@ function onSubmit() {
               placeholder="Enter email"
               name="id"
               v-model="userInfo.userId"
+              readonly
+              style="border: none"
             />
             <label for="id">ID</label>
           </div>
@@ -83,8 +84,12 @@ function onSubmit() {
               type="submit"
               class="btn btn-outline-secondary m-3"
               id="btn-go-to-index"
+              @click="modify()"
             >
               수정하기
+            </button>
+            <button type="button" class="btn btn-outline-secondary m-3" @click="onDelete()">
+              회원탈퇴
             </button>
           </div>
         </form>

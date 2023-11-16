@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import jwtDecode from "jwt-decode";
 import router from "@/router";
 
-import { login, tokenRegeneration, logout, findById } from "@/api/member";
+import { login, tokenRegeneration, logout, findById, modifyMember } from "@/api/member";
 //npm i pinia-plugin-persistedstate --force
 export const userStore = defineStore("userPiniaStore", {
   persist: {
@@ -124,14 +124,32 @@ export const userStore = defineStore("userPiniaStore", {
             this.isLogin = false;
             this.userInfo = null;
             this.isValidToken = false;
-
-            alert("로그아웃 되었습니다.");
           } else {
             console.log("유저 정보 없음!!!!");
           }
         },
         (error) => {
           console.log(error);
+        }
+      );
+    },
+    async modifyUserInfo(user) {
+      console.log(user);
+      await modifyMember(
+        user,
+        ({ data }) => {
+          if (data.message === "SUCCESS") {
+            this.userInfo = data.userInfo;
+
+            alert("회원정보가 변경 되었습니다.");
+          } else {
+            console.log("유저 정보 없음!!!!");
+          }
+        },
+        async (error) => {
+          console.log(error.response.status);
+          this.isValidToken = false;
+          this.tokenRegeneration();
         }
       );
     },

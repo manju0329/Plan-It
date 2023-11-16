@@ -71,11 +71,7 @@ const moveWrite = () => {
       <div class="col-lg-10 mt-5">
         <div class="row align-self-center mb-2">
           <div class="col-md-2 text-start">
-            <button
-              type="button"
-              class="btn btn-outline-primary btn-sm"
-              @click="moveWrite"
-            >
+            <button type="button" class="btn btn-outline-secondary btn-sm" @click="moveWrite">
               글쓰기
             </button>
           </div>
@@ -89,13 +85,7 @@ const moveWrite = () => {
                   v-model="param.word"
                   placeholder="검색어..."
                 />
-                <button
-                  class="btn btn-dark"
-                  type="button"
-                  @click="getArticleList"
-                >
-                  검색
-                </button>
+                <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
               </div>
             </form>
           </div>

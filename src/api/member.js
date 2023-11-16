@@ -13,7 +13,7 @@ async function login(user, success, fail) {
 }
 
 async function tokenRegeneration(user, success, fail) {
-  api.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
+  local.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
   await local.post(`${url}/refresh`, user).then(success).catch(fail);
 }
 
@@ -30,8 +30,13 @@ function detailMember(userId, success, fail) {
 }
 
 function deleteMember(userId, success, fail) {
-  local.get(`/admin/${url}/delete/${userId}`).then(success).catch(fail);
+  local.delete(`/admin/${url}/delete/${userId}`).then(success).catch(fail);
 }
+
+async function modifyMember(user, success, fail) {
+  await local.put(`/admin/${url}/update`, user).then(success).catch(fail);
+}
+
 async function findById(userid, success, fail) {
   local.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
   await local.get(`${url}/${userid}`).then(success).catch(fail);
@@ -46,4 +51,5 @@ export {
   tokenRegeneration,
   logout,
   findById,
+  modifyMember,
 };

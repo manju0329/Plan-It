@@ -1,10 +1,17 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import { userStore } from "@/stores/userPiniaStore";
 
 const route = useRoute();
 const router = useRouter();
+const ustore = userStore();
+
+const isMine = computed(() => {
+  if (ustore.userInfo.userId === article.value.userId) return true;
+  else return false;
+});
 
 // const articleno = ref(route.params.articleno);
 const { articleno } = route.params;
@@ -53,9 +60,7 @@ function onDeleteArticle() {
     <div class="row justify-content-center">
       <div class="col-lg-10 text-start mt-5">
         <div class="row my-2">
-          <h2 class="text-secondary">
-            {{ article.articleNo }}. {{ article.subject }}
-          </h2>
+          <h2 class="text-secondary">{{ article.articleNo }}. {{ article.subject }}</h2>
         </div>
         <div class="row">
           <div class="col-md-8">
@@ -79,23 +84,21 @@ function onDeleteArticle() {
           </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
-            <button
-              type="button"
-              class="btn btn-outline-primary mb-3"
-              @click="moveList"
-            >
+            <button type="button" class="btn btn-outline-secondary mb-3" @click="moveList">
               글목록
             </button>
             <button
+              v-if="isMine"
               type="button"
-              class="btn btn-outline-success mb-3 ms-1"
+              class="btn btn-outline-secondary mb-3 ms-1"
               @click="moveModify"
             >
               글수정
             </button>
             <button
+              v-if="isMine"
               type="button"
-              class="btn btn-outline-danger mb-3 ms-1"
+              class="btn btn-outline-secondary mb-3 ms-1"
               @click="onDeleteArticle"
             >
               글삭제

@@ -6,11 +6,15 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const ustore = userStore();
 const isLogin = computed(() => ustore.isLogin);
+const isAdmin = computed(() => {
+  return ustore.userInfo.userRole == "admin";
+});
 
 async function logout() {
   console.log("hi");
   console.log("로그아웃 -> " + ustore.userInfo.userId);
   await ustore.userLogout(ustore.userInfo.userId);
+  alert("로그아웃 되었습니다.");
   router.push("/"); // 메인 페이지로 이동
 }
 </script>
@@ -71,6 +75,10 @@ async function logout() {
             </li>
             <li class="nav-item">
               <router-link :to="{ name: 'board' }" class="nav-link">Board</router-link>
+            </li>
+            <li v-if="isLogin" class="nav-item">
+              <a v-if="isAdmin" class="nav-link" href="/admin/list">Admin</a>
+              <a v-if="!isAdmin" class="nav-link" href="/mypage">Mypage</a>
             </li>
             <li class="nav-item">
               <a v-if="!isLogin" class="nav-link" href="/login">Login</a>

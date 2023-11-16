@@ -2,10 +2,11 @@
 import { ref, watch } from "vue";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
 import { useRoute, useRouter } from "vue-router";
+import { userStore } from "@/stores/userPiniaStore";
 
 const router = useRouter();
 const route = useRoute();
-
+const ustore = userStore();
 const props = defineProps({ type: String });
 
 const isUseId = ref(false);
@@ -24,7 +25,7 @@ if (props.type === "modify") {
   let { articleno } = route.params;
   console.log(articleno + "번글 얻어와서 수정할거야");
   // API 호출 -> 수정할 글 정보 가져오기
-  getModifyArticle(articleno, ({data}) => {
+  getModifyArticle(articleno, ({ data }) => {
     console.log("가져온 글 : ", data);
     article.value = data;
   });
@@ -70,20 +71,19 @@ function writeArticle() {
   console.log(props);
   console.log("글등록하자!!", article.value);
   console.log("-----------------");
-   // API 호출
-   console.log(article.value.userId);
-   article.subject = article.value.subject;
-   article.content = article.value.content;
-   article.userId = article.value.userId;
-   console.log("write : ", article);
-   registArticle(article);
+  // API 호출
+  console.log(ustore.userInfo.userId);
+  article.subject = article.value.subject;
+  article.content = article.value.content;
+  article.value.userId = ustore.userInfo.userId;
+  console.log("write : ", article.value);
+  registArticle(article.value);
 }
 
 function updateArticle() {
   console.log(article.value.articleNo + "번글 수정하자!!", article.value);
-   // API 호출
-   modifyArticle(article.value, moveList());
-
+  // API 호출
+  modifyArticle(article.value, moveList());
 }
 
 function moveList() {
@@ -94,30 +94,20 @@ function moveList() {
 <template>
   <form @submit.prevent="onSubmit">
     <div class="mb-3">
-      <label for="userid" class="form-label">작성자 ID : </label>
-      <input
-        type="text"
-        class="form-control"
-        v-model="article.userId"
-        :disabled="isUseId"
-        placeholder="작성자ID..."
-      />
-    </div>
-    <div class="mb-3">
       <label for="subject" class="form-label">제목 : </label>
-      <input type="text" class="form-control" v-model="article.subject" placeholder="제목..." />
+      <input type="text" class="form-control" v-model="article.subject" />
     </div>
     <div class="mb-3">
       <label for="content" class="form-label">내용 : </label>
       <textarea class="form-control" v-model="article.content" rows="10"></textarea>
     </div>
-    <div class="col-auto text-center">
-      <button type="submit" class="btn btn-outline-primary mb-3" v-if="type === 'regist'">
+    <div class="form-floating m-3 d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-secondary mb-3" v-if="type === 'regist'">
         글작성
       </button>
-      <button type="submit" class="btn btn-outline-success mb-3" v-else>글수정</button>
-      <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="moveList">
-        목록으로이동...
+      <button type="submit" class="btn btn-outline-secondary mb-3" v-else>글수정</button>
+      <button type="button" class="btn btn-outline-secondary mb-3 ms-1" @click="moveList">
+        목록
       </button>
     </div>
   </form>
