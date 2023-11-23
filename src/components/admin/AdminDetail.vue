@@ -42,12 +42,8 @@ function onDeleteMember() {
 <template>
   <div class="container">
     <div class="row justify-content-center mt-5">
-      <div
-        class="container w-50 mt-5 p-3 border border-1 border-secondary rounded-4"
-      >
-        <div class="masthead-subheading mt-3" style="text-align: center">
-          MEMBER INFO
-        </div>
+      <div class="container w-50 mt-5 p-3 border border-1 border-secondary rounded-4">
+        <div class="masthead-subheading mt-3" style="text-align: center">MEMBER INFO</div>
         <div class="col-lg-10 text-start mt-5">
           <div class="row">
             <div class="form-floating m-3">
@@ -119,11 +115,7 @@ function onDeleteMember() {
             </div>
             <div class="divider mt-3 mb-3"></div>
             <div class="d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-outline-primary mb-3"
-                @click="moveList"
-              >
+              <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
                 이전으로
               </button>
               <button

@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { useQuery } from "@tanstack/vue-query";
 import AttrMap from "./attractionMap.vue";
 import AttrSearch from "./attractionSearch.vue";
+import Swal from 'sweetalert2';
 import AttrDetailList from "./attractionDetailList.vue";
 
 const select = ref({
@@ -11,6 +12,18 @@ const select = ref({
   type: "",
   search: "",
 });
+
+const msg = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer : 3000,
+  timerProgressBar : true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 const totalPage = ref(1);
 const page = ref(1);
@@ -71,7 +84,10 @@ const { data: list } = useQuery({
     ),
   enabled,
 });
-
+watch(list, (newValue) =>{
+  console.log("change");
+  console.log(newValue);
+}, {deep : true});
 // 공공데이터 서비스 키
 const serviceKey =import.meta.env.VITE_API_SERVICE_KEY;
 
@@ -91,7 +107,17 @@ async function fetchAttraction(
   const item = await data.response.body.items.item;
 
   totalPage.value = ((await data.response.body.totalCount) - 1) / perPage + 1;
-  if (!item || item.length == 0) return [];
+  console.log(item);
+  if ((!item || item.length == 0)) {
+    if(!keyword){
+      console.log("검색 결과 없읍니다요");    
+      msg.fire({
+      icon : 'info',
+      title : '검색 결과가 없습니다'
+      })
+    }
+    return []
+  };
   return data.response.body.items.item;
 }
 

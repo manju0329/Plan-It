@@ -1,6 +1,13 @@
 import { defineStore } from "pinia";
 import jwtDecode from "jwt-decode";
 import router from "@/router";
+import Swal from "sweetalert2";
+
+const msg = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: true,
+});
 
 import { login, tokenRegeneration, logout, findById, modifyMember } from "@/api/member";
 //npm i pinia-plugin-persistedstate --force
@@ -41,12 +48,18 @@ export const userStore = defineStore("userPiniaStore", {
             sessionStorage.setItem("access-token", accessToken);
             sessionStorage.setItem("refresh-token", refreshToken);
 
-            alert("로그인에 성공했습니다.");
+            msg.fire({
+              icon: "success",
+              title: "로그인에 성공하였습니다.",
+            });
           } else {
             this.isLogin = false;
             this.isLoginError = true;
             this.isValidToken = false;
-            alert("아이디나 비밀번호를 다시 확인해주세요.");
+            msg.fire({
+              icon: "error",
+              title: "아이디나 비밀번호를 다시 확인해주세요.",
+            });
           }
         },
         (error) => {
@@ -100,7 +113,10 @@ export const userStore = defineStore("userPiniaStore", {
                 } else {
                   console.log("리프레시 토큰 제거 실패");
                 }
-                alert("로그인 만료! 다시 로그인해 주세요.");
+                msg.fire({
+                  icon: "error",
+                  title: "로그인 만료! 다시 로그인해 주세요.",
+                });
                 this.isLogin = false;
                 this.userInfo = null;
                 this.isValidToken = false;
@@ -141,7 +157,10 @@ export const userStore = defineStore("userPiniaStore", {
           if (data.message === "SUCCESS") {
             this.userInfo = data.userInfo;
 
-            alert("회원정보가 변경 되었습니다.");
+            msg.fire({
+              icon: "success",
+              title: "회원 정보가 변경되었습니다.",
+            });
           } else {
             console.log("유저 정보 없음!!!!");
           }

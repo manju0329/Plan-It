@@ -59,6 +59,15 @@ function onPageChange(pg) {
 
 <style scoped>
 a {
+  color: black;
   cursor: pointer;
+}
+
+.active {
+  color: black;
+}
+
+ul {
+  color: black;
 }
 </style>

@@ -3,7 +3,6 @@ import { ref, watch } from "vue";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/stores/userPiniaStore";
-
 const router = useRouter();
 const route = useRoute();
 const ustore = userStore();
@@ -19,6 +18,7 @@ const article = ref({
   userName: "",
   hit: 0,
   registerTime: "",
+  notification: false,
 });
 
 if (props.type === "modify") {
@@ -72,7 +72,9 @@ function writeArticle() {
   console.log("글등록하자!!", article.value);
   console.log("-----------------");
   // API 호출
-  console.log(ustore.userInfo.userId);
+  if (ustore.userInfo.userRole === "admin") {
+    article.value.notification = true;
+  }
   article.subject = article.value.subject;
   article.content = article.value.content;
   article.value.userId = ustore.userInfo.userId;

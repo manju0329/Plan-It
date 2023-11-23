@@ -1,7 +1,7 @@
+<!-- 플랜 작성 - 관광지 조회 컴포넌트 -->
 <script setup>
 import { ref, computed } from "vue";
-import attrDetail from "./attractionDetail.vue";
-import Modal from "../common/Modal.vue";
+import Modal from "../../common/Modal.vue";
 import noImage from "@/assets/img/noImage.jpg";
 const props = defineProps({
   list: {
@@ -22,7 +22,7 @@ const detailView = ref({
   image : "",
 });
 
-const emit = defineEmits(["addMytriplist", 'mapClick']);
+const emit = defineEmits(["addMytriplist", 'mapClick', 'addPlan']);
 
 const click = function(target) {
   emit('mapXY', target);
@@ -36,6 +36,14 @@ const modalView = (data) => {
   detailView.value.addr2 = data.addr2;
   detailView.value.image = data.firstimage;
   console.log(detailView);
+}
+
+// 계획추가버튼:
+// planWrite로 데이터 전송 -> 다시 PlanWriteList에게 전송
+// -> 카드 만들기 + 만들어진 카드 array 바탕으로 경로계산
+const addPlan = (data) => {
+  console.log("계획추가 : " + data.title);
+  emit("addPlan", data);
 }
 
 const typelist = [
@@ -60,13 +68,7 @@ const mapClick = (data) => {
   emit("mapClick", mapXY);
 }
 
-const list = computed(() => {
-  if(props.list == null){
-    console.log("검색결과 null");
-  }
-  return props.list;
-})
-
+const list = computed(() => props.list);
 console.log("list : " , props.list);
 </script>
 <template>
@@ -81,8 +83,8 @@ console.log("list : " , props.list);
     </transition>
 
     <v-container fluid class="scroll">
-      <v-row style="display: flex; flex-direction: column; align-items: end; ">
-        <v-col v-for="info in list" :key="info.contentid" cols="1" md="8" lg="8">
+      <v-row style="display: flex; flex-direction: column; align-items: start; ">
+        <v-col v-for="info in list" :key="info.contentid">
           <v-card
             @click="mapClick(info)">
               <v-img
@@ -94,6 +96,7 @@ console.log("list : " , props.list);
             <v-card-title>{{ info.title }}</v-card-title>
             <v-card-actions>
               <v-btn color="orange" size="small" @click="isModalViewed = true, modalView(info)">상세정보</v-btn>
+              <v-btn color="orange" size="small" style="margin-left:15%" @click="addPlan(info)">계획에 추가하기</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -128,7 +131,7 @@ console.log("list : " , props.list);
 .fade-leave-to {opacity: 0;} /*끝날때 스타일 */
 .container {
   margin-top: 0px;
-  margin-left : 8%;
+  margin-left : -2%;
   height: 60vh;
 }
 .v-container{

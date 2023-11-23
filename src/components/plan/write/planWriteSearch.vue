@@ -1,3 +1,4 @@
+<!-- 플랜 작성 - 관광지 조회 조건 컴포넌트 -->
 <script setup>
 import { computed, ref } from "vue";
 import { useQuery } from "@tanstack/vue-query";
@@ -42,9 +43,11 @@ const typelist = [
   { code: "38", name: "쇼핑" },
   { code: "39", name: "음식점" },
 ];
-//https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=qUMUT9qqrutatif8aAOZLmlAOktVl4Y9XHmMk13tee2UqtPMEXwu2Ds7BMPkw8uGI6suRWOOIqaBVvDajWOurg%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json
+
 // 공공데이터 서비스 키
 const serviceKey =import.meta.env.VITE_API_SERVICE_KEY;
+const serviceKey2 = import.meta.env.VITE_OPEN_API_SERVICE_KEY;
+
 // 지역코드
 const areaUrl =
   "https://apis.data.go.kr/B551011/KorService1/areaCode1?serviceKey=" +

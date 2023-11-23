@@ -77,7 +77,6 @@ function onDeleteArticle() {
               </p>
             </div>
           </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
           <div class="divider mb-3"></div>
           <div class="text-secondary">
             {{ article.content }}

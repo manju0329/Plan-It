@@ -3,6 +3,12 @@ import { RouterLink, RouterView } from "vue-router";
 import { computed } from "vue";
 import { userStore } from "@/stores/userPiniaStore";
 import { useRouter } from "vue-router";
+import Swal from "sweetalert2";
+const msg = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: true,
+});
 const router = useRouter();
 const ustore = userStore();
 const isLogin = computed(() => ustore.isLogin);
@@ -14,7 +20,10 @@ async function logout() {
   console.log("hi");
   console.log("로그아웃 -> " + ustore.userInfo.userId);
   await ustore.userLogout(ustore.userInfo.userId);
-  alert("로그아웃 되었습니다.");
+  msg.fire({
+    icon: "success",
+    title: "로그아웃 되었습니다.",
+  });
   router.push("/"); // 메인 페이지로 이동
 }
 </script>
@@ -49,7 +58,7 @@ async function logout() {
       style="height: 10vh; background-color: white"
     >
       <div class="container">
-        <a class="navbar-brand" href="/">EnjoyTrip</a>
+        <a class="navbar-brand" href="/">PLAN-IT</a>
         <button
           class="navbar-toggler"
           type="button"
