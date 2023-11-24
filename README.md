@@ -13,9 +13,17 @@
 | 필수 기능 |  |
 | -------- | ------------------ |
 | 게시판 기능 | :white_check_mark: |
-| 게시판 화면 | :white_check_mark: |
 | 메인페이지 화면 | :white_check_mark: |
-| 회원관리 화면 | :white_check_mark: |
+| 회원관리 기능 | :white_check_mark: |
+| 관광지 조회 기능 | :white_check_mark: |
+
+| 추가 기능 |  |
+| -------- | ------------------ |
+| 여행 계획 기능 | :white_check_mark: |
+| 핫플레이스 기능 | :white_check_mark: |
+| 관리자 화면 | :white_check_mark: |
+
+
 
 # 1. 게시판 관련 기능
 ### 게시글 작성
