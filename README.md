@@ -1,11 +1,11 @@
 
-# :beach_with_umbrella: : PLAN_IT
+# 🏖 : PLAN_IT
 
 
 
 
 
-## :person_frowning: 팀원
+## 🙍 팀원
 
 - 이민주
 - 김하은
